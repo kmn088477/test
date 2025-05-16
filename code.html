@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLBB Support Letter Generator</title>
+    <style>
+        :root {
+            --primary: #7c4dff;
+            --primary-dark: #6a3eee;
+            --secondary: #f44336;
+            --dark: #212121;
+            --light: #f9f9f9;
+            --gray: #757575;
+            --light-gray: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(124, 77, 255, 0.2);
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .output-section {
+            margin-top: 30px;
+            border-top: 1px solid var(--light-gray);
+            padding-top: 30px;
+        }
+        
+        .output-box {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .output-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .output-title h3 {
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+        
+        .copy-btn {
+            background-color: transparent;
+            color: var(--primary);
+            font-size: 0.9rem;
+            padding: 6px 12px;
+            border: 1px solid var(--primary);
+        }
+        
+        .copy-btn:hover {
+            background-color: rgba(124, 77, 255, 0.1);
+            transform: none;
+        }
+        
+        .copy-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        
+        pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+            margin: 0;
+            font-family: inherit;
+        }
+        
+        .character-count {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-align: right;
+            margin-top: 5px;
+        }
+        
+        .success-animation {
+            animation: successPulse 1s ease;
+        }
+        
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MLBB Support Letter Generator</h1>
+            <p>Generate a complaint letter about unfair matchmaking</p>
+        </div>
+        
+        <div class="content">
+            <div class="form-group">
+                <label for="battleId">Battle ID</label>
+                <input type="text" id="battleId" placeholder="Enter battle ID">
+            </div>
+            
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date">
+            </div>
+            
+            <div class="form-group">
+                <label for="time">Time</label>
+                <input type="time" id="time">
+            </div>
+            
+            <button id="generateBtn" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v12"></path>
+                    <path d="m8 11 4 4 4-4"></path>
+                    <path d="M8 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"></path>
+                </svg>
+                Generate Letters
+            </button>
+            
+            <div class="output-section">
+                <div class="output-box">
+                    <div class="output-title">
+                        <h3>Full Support Letter</h3>
+                        <button class="copy-btn" id="copyFull">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy to Clipboard
+                        </button>
+                    </div>
+                    <pre id="fullOutput">Generate a letter to see the output here...</pre>
+                </div>
+                
+                <div class="output-box">
+                    <div class="output-title">
+                        <h3>Short Version (200 Characters)</h3>
+                        <button class="copy-btn" id="copyShort">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy to Clipboard
+                        </button>
+                    </div>
+                    <pre id="shortOutput">Generate a letter to see the shortened version here...</pre>
+                    <div class="character-count" id="characterCount"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date to today
+            const today = new Date();
+            const formattedDate = today.toISOString().substr(0, 10);
+            document.getElementById('date').value = formattedDate;
+            
+            // Format the time to HH:MM
+            const hours = String(today.getHours()).padStart(2, '0');
+            const minutes = String(today.getMinutes()).padStart(2, '0');
+            document.getElementById('time').value = `${hours}:${minutes}`;
+            
+            const generateBtn = document.getElementById('generateBtn');
+            const copyFullBtn = document.getElementById('copyFull');
+            const copyShortBtn = document.getElementById('copyShort');
+            
+            generateBtn.addEventListener('click', generateLetters);
+            copyFullBtn.addEventListener('click', () => copyToClipboard('fullOutput', copyFullBtn));
+            copyShortBtn.addEventListener('click', () => copyToClipboard('shortOutput', copyShortBtn));
+            
+            function generateLetters() {
+                const battleId = document.getElementById('battleId').value || '[Insert Battle ID]';
+                
+                let dateValue = document.getElementById('date').value;
+                let formattedDate = dateValue ? formatDate(dateValue) : '[Insert Date]';
+                
+                let timeValue = document.getElementById('time').value;
+                let formattedTime = timeValue || '[Insert Time]';
+                
+                // Generate full letter
+                const fullLetter = `Dear MLBB Support Team,
+
+Unfair Matchmaking - Battle ID ${battleId}
+MLBB matchmaking is unfair. My teams are much weaker than enemies. Teammates pick poorly, lack skill & respect, disrupt, and can't fill roles. This creates huge score gaps. See Battle ID: ${battleId}, Date: ${formattedDate}, Time: ${formattedTime} for a clear example of severe imbalance. Please investigate and improve the system.
+
+Sincerely,
+Jnix Rina`;
+
+                // Generate shortened version (200 characters)
+                const shortLetter = `MLBB matchmaking unfair. Teams weaker than enemies. Players lack skill & respect. See Battle ID: ${battleId}, Date: ${formattedDate}, Time: ${formattedTime}. Please investigate & improve matchmaking system.`;
+                
+                document.getElementById('fullOutput').textContent = fullLetter;
+                document.getElementById('shortOutput').textContent = shortLetter;
+                
+                // Update character count
+                const charCount = shortLetter.length;
+                document.getElementById('characterCount').textContent = `Character count: ${charCount}/200`;
+            }
+            
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return date.toLocaleDateString('en-US', options);
+            }
+            
+            function copyToClipboard(elementId, button) {
+                const element = document.getElementById(elementId);
+                const text = element.textContent;
+                
+                navigator.clipboard.writeText(text).then(function() {
+                    const originalText = button.innerHTML;
+                    
+                    button.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 6 9 17l-5-5"></path>
+                        </svg>
+                        Copied!
+                    `;
+                    
+                    button.classList.add('success-animation');
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.classList.remove('success-animation');
+                    }, 2000);
+                }).catch(function(err) {
+                    console.error('Could not copy text: ', err);
+                    alert('Failed to copy text. Please try again.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
